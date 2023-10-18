@@ -112,6 +112,70 @@ numberButtons.addEventListener('click', (event) =>{
 });
 
 
+//keyboard listener
+
+document.addEventListener('keypress', event => {
+    
+    if (isNumber.test(event.key)) {
+        if (isCalculated) {
+            isCalculated = false;
+            bottomText.textContent = '';
+            bottomText.textContent += event.key;
+        }
+        else {
+            if (bottomText.textContent.length < 18) {
+                bottomText.textContent += event.key;
+            }
+            else {
+                return;
+            }
+        };
+        
+    }
+    else if (event.key === '.' && !hasDot.test(bottomText.textContent)) {
+        bottomText.textContent += ((bottomText.textContent != '') ? event.key : '0.');
+    };
+
+    // the main part where we decide what functions to call and do
+    switch(event.key) {
+        case 'c':
+            topText.textContent = '';
+            bottomText.textContent = '';
+            setFontSize()
+            break;
+        case '+':
+            calcEvaluate('+');
+            break;
+        case '-':
+            calcEvaluate('-');
+            break;
+        case '*':
+            calcEvaluate('*');
+            break;
+        case '/':
+            calcEvaluate('/');
+            break;
+        case '+/-':
+            bottomText.textContent = '-' + bottomText.textContent;
+            break;
+        case '=':
+            numberTwo = bottomText.textContent;
+            topText.textContent = '';
+            bottomText.textContent = calculate(+numberOne, +numberTwo, operator);
+            setFontSize();
+            break;
+        case 'Enter':
+            numberTwo = bottomText.textContent;
+            topText.textContent = '';
+            bottomText.textContent = calculate(+numberOne, +numberTwo, operator);
+            setFontSize();
+            break;
+    };
+  })
+
+  
+
+
 
 
 // below are the available calculation logics along with the actual calculation decider function
