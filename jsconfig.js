@@ -11,6 +11,16 @@ let calcArray = [];
 let numberOne = 0;
 let numberTwo = 0;
 let operator = '';
+let memoryNumber = 0;
+
+function setFontSize() {
+    if (bottomText.textContent.length > 18) {
+        bottomText.style.fontSize = '18px';
+    }
+    else {
+        bottomText.style.fontSize = '24px';
+    }
+}
 
 numberButtons.addEventListener('click', (event) =>{
     if (isNumber.test(event.target.textContent)) {
@@ -20,13 +30,31 @@ numberButtons.addEventListener('click', (event) =>{
             bottomText.textContent += event.target.textContent;
         }
         else {
-            bottomText.textContent += event.target.textContent;
+            if (bottomText.textContent.length < 18) {
+                bottomText.textContent += event.target.textContent;
+            }
+            else {
+                return;
+            }
         };
     };
     switch(event.target.textContent) {
         case 'C':
             topText.textContent = '';
             bottomText.textContent = '';
+            setFontSize()
+            break;
+        case 'M':
+            memoryNumber = bottomText.textContent;
+            break;
+        case 'MR':
+            bottomText.textContent = memoryNumber;
+            break;
+        case '^2':
+            numberOne = bottomText.textContent;
+            operator = '**'
+            bottomText.textContent = calculate(numberOne, numberTwo, operator);
+            setFontSize()
             break;
         case '+':
             if (topText.textContent === '') {
@@ -62,8 +90,9 @@ numberButtons.addEventListener('click', (event) =>{
             break;
         case '=':
             numberTwo = bottomText.textContent;
-            topText.textContent = ''
-            bottomText.textContent = calculate(+numberOne, +numberTwo, operator)
+            topText.textContent = '';
+            bottomText.textContent = calculate(+numberOne, +numberTwo, operator);
+            setFontSize();
     };
 
 });
@@ -88,6 +117,10 @@ function divide(inputOne,inputTwo) {
     return inputOne / inputTwo
 }
 
+function power(inputOne) {
+    return inputOne ** 2;
+}
+
 function calculate(inputOne, inputTwo, operator) {
     numberOne = inputOne;
     numberTwo = inputTwo;
@@ -101,5 +134,7 @@ function calculate(inputOne, inputTwo, operator) {
             return multiply(numberOne, numberTwo);
         case '/':
             return divide(numberOne, numberTwo);
+        case '**':
+            return power(numberOne);
     };
 }
