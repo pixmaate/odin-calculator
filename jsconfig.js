@@ -1,40 +1,67 @@
-const numberButtons = document.querySelector('.mainRows');
+const numberButtons = document.querySelector('#calculatorBody');
 const topText = document.querySelector('#textTop');
 const bottomText = document.querySelector('#textBottom');
 const isNumber = new RegExp("^[0-9]$");
 
 topText.textContent = '';
-bottomText.textContent = ''; 
+bottomText.textContent = '';
+
+let calcArray = [];
+let numberOne = 0;
+let numberTwo = 0;
+let operator = '';
 
 numberButtons.addEventListener('click', (event) =>{
     if (isNumber.test(event.target.textContent)) {
         bottomText.textContent += event.target.textContent;
     };
     switch(event.target.textContent) {
+        case 'C':
+            topText.textContent = '';
+            bottomText.textContent = '';
+            break;
         case '+':
+            if (topText.textContent === '') {
+                numberOne = bottomText.textContent;
+                operator = '+';
+            }
             topText.textContent = bottomText.textContent;
             bottomText.textContent = '';
             break;
         case '-':
+            if (topText.textContent === '') {
+                numberOne = bottomText.textContent;
+                operator = '-';
+            }
             topText.textContent = bottomText.textContent;
             bottomText.textContent = '';
             break;
         case '*':
+            if (topText.textContent === '') {
+                numberOne = bottomText.textContent;
+                operator = '*';
+            }
             topText.textContent = bottomText.textContent;
             bottomText.textContent = '';
             break;
         case '/':
+            if (topText.textContent === '') {
+                numberOne = bottomText.textContent;
+                operator = '/';
+            }
             topText.textContent = bottomText.textContent;
             bottomText.textContent = '';
             break;
+        case '=':
+            numberTwo = bottomText.textContent;
+            topText.textContent = ''
+            bottomText.textContent = calculate(+numberOne, +numberTwo, operator)
     };
 
 });
 
 
-let numberOne = 0;
-let numberTwo = 0;
-let operator = '';
+
 
 
 function add(inputOne,inputTwo) {
