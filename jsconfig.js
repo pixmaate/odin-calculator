@@ -41,6 +41,7 @@ function calcEvaluate(inputOperator) {
         numberTwo = bottomText.textContent;
         bottomText.textContent = '';
         topText.textContent = calculate(+numberOne, +numberTwo, operator);
+        numberOne = topText.textContent;
         setFontSize();
         operator = inputOperator;
         return;
