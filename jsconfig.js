@@ -56,6 +56,9 @@ function calcEvaluate(inputOperator) {
 
 numberButtons.addEventListener('click', (event) =>{
 
+    // unfocus the clicked button as it would cause bugs
+    event.target.blur();
+
     // this part takes care of adding characters to the display
     if (isNumber.test(event.target.textContent)) {
         if (isCalculated) {
