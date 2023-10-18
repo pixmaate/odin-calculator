@@ -2,6 +2,7 @@ const numberButtons = document.querySelector('#calculatorBody');
 const topText = document.querySelector('#textTop');
 const bottomText = document.querySelector('#textBottom');
 const isNumber = new RegExp("^[0-9]$");
+const hasDot = new RegExp("\\.");
 
 topText.textContent = '';
 bottomText.textContent = '';
@@ -30,6 +31,7 @@ function calcEvaluate(inputOperator) {
     else if (operator === inputOperator) {
         topText.textContent = '';
         bottomText.textContent = calculate(+numberOne, +numberOne, operator);
+        setFontSize();
         return;
     }
     topText.textContent = bottomText.textContent;
@@ -38,6 +40,8 @@ function calcEvaluate(inputOperator) {
 };
 
 numberButtons.addEventListener('click', (event) =>{
+
+    // this part takes care of adding characters to the display
     if (isNumber.test(event.target.textContent)) {
         if (isCalculated) {
             isCalculated = false;
@@ -52,7 +56,16 @@ numberButtons.addEventListener('click', (event) =>{
                 return;
             }
         };
+        
+    }
+    else if (event.target.textContent === '.' && !hasDot.test(bottomText.textContent)) {
+        bottomText.textContent += ((bottomText.textContent != '') ? event.target.textContent : '0.');
     };
+
+
+
+
+    // the main part where we decide what functions to call and do
     switch(event.target.textContent) {
         case 'C':
             topText.textContent = '';
@@ -75,28 +88,13 @@ numberButtons.addEventListener('click', (event) =>{
             calcEvaluate('+');
             break;
         case '-':
-            if (topText.textContent === '') {
-                numberOne = bottomText.textContent;
-                operator = '-';
-            }
-            topText.textContent = bottomText.textContent;
-            bottomText.textContent = '';
+            calcEvaluate('-');
             break;
         case '*':
-            if (topText.textContent === '') {
-                numberOne = bottomText.textContent;
-                operator = '*';
-            }
-            topText.textContent = bottomText.textContent;
-            bottomText.textContent = '';
+            calcEvaluate('*');
             break;
         case '/':
-            if (topText.textContent === '') {
-                numberOne = bottomText.textContent;
-                operator = '/';
-            }
-            topText.textContent = bottomText.textContent;
-            bottomText.textContent = '';
+            calcEvaluate('/');
             break;
         case '=':
             numberTwo = bottomText.textContent;
@@ -110,6 +108,7 @@ numberButtons.addEventListener('click', (event) =>{
 
 
 
+// below are the available calculation logics along with the actual calculation decider function
 
 function add(inputOne,inputTwo) {
     return inputOne + inputTwo
