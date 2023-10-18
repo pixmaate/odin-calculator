@@ -22,6 +22,21 @@ function setFontSize() {
     }
 }
 
+function calcEvaluate(inputOperator) {
+    if (topText.textContent === '') {
+        numberOne = bottomText.textContent;
+        operator = inputOperator;
+    }
+    else if (operator === inputOperator) {
+        topText.textContent = '';
+        bottomText.textContent = calculate(+numberOne, +numberOne, operator);
+        return;
+    }
+    topText.textContent = bottomText.textContent;
+    bottomText.textContent = '';
+    return;
+};
+
 numberButtons.addEventListener('click', (event) =>{
     if (isNumber.test(event.target.textContent)) {
         if (isCalculated) {
@@ -57,12 +72,7 @@ numberButtons.addEventListener('click', (event) =>{
             setFontSize()
             break;
         case '+':
-            if (topText.textContent === '') {
-                numberOne = bottomText.textContent;
-                operator = '+';
-            }
-            topText.textContent = bottomText.textContent;
-            bottomText.textContent = '';
+            calcEvaluate('+');
             break;
         case '-':
             if (topText.textContent === '') {
