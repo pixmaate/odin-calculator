@@ -1,7 +1,34 @@
-const numberButtons = document.querySelector('.mainButtons');
+const numberButtons = document.querySelector('.mainRows');
+const topText = document.querySelector('#textTop');
+const bottomText = document.querySelector('#textBottom');
+const isNumber = new RegExp("^[0-9]$");
+
+topText.textContent = '';
+bottomText.textContent = ''; 
 
 numberButtons.addEventListener('click', (event) =>{
-    alert(event.target.textContent)
+    if (isNumber.test(event.target.textContent)) {
+        bottomText.textContent += event.target.textContent;
+    };
+    switch(event.target.textContent) {
+        case '+':
+            topText.textContent = bottomText.textContent;
+            bottomText.textContent = '';
+            break;
+        case '-':
+            topText.textContent = bottomText.textContent;
+            bottomText.textContent = '';
+            break;
+        case '*':
+            topText.textContent = bottomText.textContent;
+            bottomText.textContent = '';
+            break;
+        case '/':
+            topText.textContent = bottomText.textContent;
+            bottomText.textContent = '';
+            break;
+    };
+
 });
 
 
