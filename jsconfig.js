@@ -23,21 +23,36 @@ function setFontSize() {
     }
 }
 
+
+// This function evaluates the order to call calculations
+
 function calcEvaluate(inputOperator) {
+
+    if (bottomText.textContent === 'ERROR') {
+        return;
+    };
+
     if (topText.textContent === '') {
         numberOne = bottomText.textContent;
         operator = inputOperator;
     }
-    else if (operator === inputOperator) {
-        topText.textContent = '';
-        bottomText.textContent = calculate(+numberOne, +numberOne, operator);
+    else if (operator != '') {
+        numberOne = topText.textContent;
+        numberTwo = bottomText.textContent;
+        bottomText.textContent = '';
+        topText.textContent = calculate(+numberOne, +numberTwo, operator);
         setFontSize();
+        operator = inputOperator;
         return;
-    }
+    };
     topText.textContent = bottomText.textContent;
     bottomText.textContent = '';
     return;
 };
+
+
+
+//This is the event listener for the button clicks
 
 numberButtons.addEventListener('click', (event) =>{
 
@@ -212,7 +227,7 @@ function calculate(inputOne, inputTwo, operator) {
         case '*':
             return multiply(numberOne, numberTwo);
         case '/':
-            return divide(numberOne, numberTwo);
+            return (numberTwo === 0) ? "ERROR" : divide(numberOne, numberTwo);
         case '**':
             return power(numberOne);
     };
