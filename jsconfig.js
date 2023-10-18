@@ -84,6 +84,9 @@ numberButtons.addEventListener('click', (event) =>{
             bottomText.textContent = calculate(numberOne, numberTwo, operator);
             setFontSize()
             break;
+        case 'D':
+            bottomText.textContent = ((isCalculated) ? '' : bottomText.textContent.slice(0,-1));
+            break;
         case '+':
             calcEvaluate('+');
             break;
@@ -95,6 +98,9 @@ numberButtons.addEventListener('click', (event) =>{
             break;
         case '/':
             calcEvaluate('/');
+            break;
+        case '+/-':
+            bottomText.textContent = '-' + bottomText.textContent;
             break;
         case '=':
             numberTwo = bottomText.textContent;
